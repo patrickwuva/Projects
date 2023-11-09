@@ -3,7 +3,7 @@ import requests
 
 season = "2007-08"
 
-url = "https://www.sportsbookreviewsonline.com"
+url = "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nhl-odds-2007-08/"
 response = requests.get(url)
 print(response.status_code)
 html = response.text
