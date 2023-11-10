@@ -19,5 +19,5 @@ def get(year,game):
 
     else:
 
-        data = json.loads(response.text)
+        data = json.dumps(response.text)
     return data
