@@ -1,14 +1,20 @@
-import sys
 import requests
 import json
 
-id = sys.argv[1].strip() 
-url = f"https://api-web.nhle.com/v1/gamecenter/{id}/boxscore"
-data = []
-try:
-    response = requests.get(url)
-    data = json.loads(response.text)
-        
-except Exception as e:
-    print(f"Error: {str(e)}")
-    print(data["awayTeam"]["abbrev"])
+
+def get(year,game):
+    
+    game = str(game)
+
+    while len(game) < 4:
+        game = "0"+game
+    print(game)
+    data = []
+    response = requests.get(f"https://api-web.nhle.com/v1/gamecenter/{str(year)}02{game}")
+    if response.status_code != 200:
+        data = 404
+
+    else:
+
+        data = json.loads(response.text)
+    return data
