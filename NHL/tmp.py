@@ -8,28 +8,31 @@ season_data = []
 
 
 
-def get_season(data, year, game):
-    print(f"current game: {str(game)}")
-    data = game_request.get(year,game)
+def get_season(year, game):
+   
+    
+    data = 0
+    while True:
 
-    if data == 404 or game == 5:
-        file_path = f"data/seasons/{year}.json"
-        print()
-        with open(file_path,"w") as file:
-            json.dump(season_data, file, indent=4).replace("/","")
-        return game, "done"
-    
-    
-    else:
+        
+        data = game_request.get(year,game)
+
+        if data == 404 or data["gameState"] == "FUT":
+            break
+        print(f"current game: {str(game)}")
+
         season_data.append(data)
-        return get_season(data,year,game+1)
+
+        game = game + 1
+
+        print( data["gameState"])
+      
+    return season_data
 
 
-get_season(0,sys.argv[1],1)
-
-with open("data/seasons/2023.json") as file:
-    data = json.load(file)
+get_season(sys.argv[1],400)
 
 
-for game in data:
-    print(game)
+with open("data/seasons/2023.json", "w") as file:
+
+    file.write(season_data)

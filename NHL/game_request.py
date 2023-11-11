@@ -10,7 +10,6 @@ def get(year,game):
     for i in range(len(game),4):
         game = "0"+game
 
-
     data = []
     response = requests.get(f"https://api-web.nhle.com/v1/gamecenter/{str(year)}02{game}/boxscore")
     
@@ -19,5 +18,6 @@ def get(year,game):
 
     else:
 
-        data = json.dumps(response.text)
+        data = response.json()
+
     return data
