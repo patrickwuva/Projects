@@ -1,7 +1,7 @@
 import json
 
 class generate_data:
-    def __init__(self,team1, team2, season=2023):
+    def __init__(self,team1, team2=0, season=2023):
         self.team1 = team1
         self.team2 = team2
         self.season = season
@@ -15,11 +15,11 @@ class generate_data:
 
     def get(self):
 
-        data = []
+        data = []   
         for game in self.json_data:
-            if game["homeTeam"]["abbrev"] == team1.name:
+            if game["homeTeam"]["abbrev"] == self.team1:
 
-                if team2 != 0 and team2.name == game["awayTeam"]["abbrev"]:
+                if self.team2 != 0 and self.team2 == game["awayTeam"]["abbrev"]:
                     data.append(game)    
                 
                 else:

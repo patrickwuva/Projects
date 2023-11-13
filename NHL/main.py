@@ -11,6 +11,7 @@ nhl = nhl_data()
 
 data = nhl_data.get(sys.argv[1])
 
+print("hello")
 print(data)
 
 
