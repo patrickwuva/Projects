@@ -25,6 +25,14 @@ class generate_data:
                 else:
                     data.append(game)
 
+            elif game["awayTeam"]["abbrev"] == self.team1:
+
+                if self.team2 != 0 and self.team2 == game["homeTeam"]["abbrev"]:
+                    data.append(game)    
+                
+                else:
+                    data.append(game)
+
         if not data:
             return 0
         
