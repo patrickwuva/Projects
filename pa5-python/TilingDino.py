@@ -14,6 +14,7 @@
 # Collaborators: 
 # Sources: Introduction to Algorithms, Cormen
 #################################
+
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,6 +23,31 @@ import math
 from copy import deepcopy
 from collections import deque
 from networkx.algorithms.flow import dinitz
+
+
+def create_graph(a):
+
+    g = nx.DiGraph()
+    w = len(a[0]) + 1
+    h = len(a) + 1
+    for y in range(h):
+        for x in range(w):
+            z = w * y + w
+
+            if (x == 0 and y == h - 1) or (x == 0 and y == 0) or (x == w - 1 and y == 0) or (
+                    x == w - 1 and y == h - 1):
+                nx = 1
+                ny = 1
+
+                if x == w - 1:
+                    nx = -1
+                if y == h - 1:
+                    ny = -1
+                g.add_edge(z, z + nx, capacity=(a[y][x] == a[y][x + nx]))
+                g.add_edge(z, z + (ny * w), capacity=(a[y][x] == a[x + ny][x]))
+                g.add_edge(z, z + (ny * w) + nx, capacity=(a[y][x] == a[y + ny][x + nx]))
+
+    return g
 
 
 def create_array(lines):
@@ -34,34 +60,8 @@ def create_array(lines):
             if s == ".":
                 arr[i].append(0)
             else:
-
                 arr[i].append(1)
     return arr
-
-
-def create_graph(a):
-    g = nx.DiGraph()
-
-    for i in range(len(a)):
-        for j in range(len(a[i])):
-
-            if i == 0:
-                if j == 0:
-                    g.add_edge(j, i, capacity=a[j][i] == a[i][j + 1])
-                if j == len(a[i]) - 1:
-                    g.add_edge(j, i, capacity=a[j][i] == a[i][j - 1])
-            elif i == len(a) - 1:
-                if j == 0:
-                    g.add_edge(j, i, capacity=a[j][i] == a[i][j + 1])
-                if j == len(a[i]) - 1:
-                    g.add_edge(j, i, capacity=a[j][i] == a[i][j - 1])
-
-            else:
-                if j == 0:
-                    g.add_edge(j, i, capacity=(a[j][i] == a[i][j + 1] and a[i][j] == a[i][j - 1] and a[i][j] == a[i-1][j - 1] and a[i][j] == a[i-1][j + 1] and a[i][j] == a[i-1][j]))
-                if j == len(a[i]) - 1:
-                    g.add_edge(j, i, capacity=a[i][j] == a[i][j - 1])
-    return g
 
 
 class TilingDino:
@@ -74,6 +74,7 @@ class TilingDino:
     # and return a list of strings representing the tiling
     #
     # @return the list of strings representing the tiling
+
     def compute(self, lines):
         m = create_array(lines)
         g = create_graph(m)
