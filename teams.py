@@ -1,4 +1,0 @@
-
-class teams:
-
-    pass
